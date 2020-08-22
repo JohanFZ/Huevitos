@@ -45,6 +45,8 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
         vis1.CerrarB.addActionListener(this);
         vis1.MinimizarB.addActionListener(this);
         vis1.volver.addActionListener(this);
+        vis1.Nombres.setModel(mom.Combo_nombreProveedor());
+        vis1.Telefonos.setModel(mom.Combo_telefonoProveedor());
     }
 
     public void limpiarPro() {

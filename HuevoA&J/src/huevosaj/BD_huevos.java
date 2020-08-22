@@ -255,7 +255,7 @@ public class BD_huevos {
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-        return resultado;
+        return resultado; 
     }
 
     public int Act_Pro(int id_proveedor, String primernombre_proveedor, String segundonombre_proveedor, String primerapellido_proveedor, String segundoapellido_proveedor, String direccion_proveedor, String telefono_proveedor, String corrreo_proveedor) {
@@ -456,5 +456,36 @@ public class BD_huevos {
 
         return estado;
     }
-
+    
+    /// COmbos PROVEEDORES
+    
+    public DefaultComboBoxModel Combo_nombreProveedor() {
+        DefaultComboBoxModel listaModelo = new DefaultComboBoxModel();
+        listaModelo.addElement("Seleccione");
+        ResultSet res = this.Consulta("select * from Proveedor");
+        try {
+            while (res.next()) {
+                listaModelo.addElement(res.getString("primernombre_proveedor"));
+            }
+            res.close();
+        } catch (SQLException ex) {
+            System.err.print(ex.getMessage());
+        }
+        return listaModelo;
+    }
+    
+        public DefaultComboBoxModel Combo_telefonoProveedor() {
+        DefaultComboBoxModel listaModelo = new DefaultComboBoxModel();
+        listaModelo.addElement("Seleccione");
+        ResultSet res = this.Consulta("select * from Proveedor");
+        try {
+            while (res.next()) {
+                listaModelo.addElement(res.getString("telefono_proveedor"));
+            }
+            res.close();
+        } catch (SQLException ex) {
+            System.err.print(ex.getMessage());
+        }
+        return listaModelo;
+    }
 }
