@@ -17,7 +17,7 @@ public class BD_huevos {
 
     //CONEXION BASE DE DATOS----------------------------------------------------------------------
     public static Connection getConexion() {
-        String url = "jdbc:sqlserver://bdhuevos.mssql.somee.com:1433;databaseName=bdhuevos";
+        String url = "jdbc:sqlserver://bdhuevos.mssql.somee.com;databaseName=bdhuevos";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             System.out.println("Conectado.");
@@ -288,5 +288,46 @@ public class BD_huevos {
         }
 
         return estado;
+    }
+       ////Listar Bueno Proveedores
+        public DefaultTableModel Lista_prov() {
+
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 9) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        };
+        ResultSet result;
+        try {
+
+            PreparedStatement st = contacto.prepareStatement("select * from Proveedor ");
+
+            result = st.executeQuery();
+            ResultSetMetaData rmsd = result.getMetaData();
+            int canCol = rmsd.getColumnCount();
+            canCol += 1;
+            for (int i = 1; i < canCol; i++) {
+                String title[] = {"", "ID Proveedor", "Primer Nombre", "Segundo Nombre", "Primer Apellido","Segundo Apellido","Dirección", "Telefono","Correo"};
+                modelo.addColumn(title[i]);
+            }
+            canCol = canCol - 1;
+            while (result.next()) {
+                Object[] fila = new Object[canCol];
+                for (int i = 0; i < canCol; i++) {
+                    fila[i] = result.getObject(i + 1);
+                }
+//                modelo.addRow(new Object[]{fila[0],new JLabel(this.view_img(3)),fila[2],fila[3]});
+                modelo.addRow(fila);
+            }
+        } catch (SQLException ex) {
+
+        }
+        return modelo;
     }
 }

@@ -49,20 +49,18 @@ public class Controlador_menu implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
 
         if (ae.getSource() == vs.JBproveedores) {
-            contacto1 = huevosaj.BD_huevos.getConexion();
+            
             Vista_Proveedor v1 = new Vista_Proveedor();
             BD_huevos m = new BD_huevos();
             Controlador_Proveedor n = new Controlador_Proveedor(v1, m);
             
             vs.setVisible(false);
-             mom.desconectar();
+
         }
-        if (ae.getSource() == vs.JBclientes) {
-            contacto1 = huevosaj.BD_huevos.getConexion();
+        if (ae.getSource() == vs.JBclientes) {          
             Vista_clientes v1 = new Vista_clientes();
             BD_huevos m = new BD_huevos();
             Controlador_cliente n = new Controlador_cliente(v1, m);
-        
 
             vs.setVisible(false);
         }

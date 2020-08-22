@@ -83,27 +83,30 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if(e.getSource() == vis1.BEliminar){
+        if (e.getSource() == vis1.ActualizarB) {
+
+        }
+        if (e.getSource() == vis1.BEliminar) {
             int k = vis1.tabla.getSelectedRow();
-                int c = vis1.tabla.getSelectedRowCount();
-                if (k >= 0 && c == 1) {
-                    vis1.TId_proveeedor.setText(String.valueOf(vis1.tabla.getValueAt(k, 0)));
-                    vis1.TId_proveeedor.setEditable(false);
-                    int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar este Proveedor?", "Alerta!", JOptionPane.YES_NO_OPTION);
-                    contacto1 = huevosaj.BD_huevos.getConexion();
-                    if (resp == 0) {
-                        this.mom.Borrarproveedor(Integer.parseInt(this.vis1.TId_proveeedor.getText()));
-                        JOptionPane.showMessageDialog(null, "Proveedor Eliminado");
-                        llenartablaproveedores(vis1.tabla);
-                        mom.desconectar();
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Debe aceptar la eliminación");
-                    }
+            int c = vis1.tabla.getSelectedRowCount();
+            if (k >= 0 && c == 1) {
+                vis1.TId_proveeedor.setText(String.valueOf(vis1.tabla.getValueAt(k, 0)));
+                vis1.TId_proveeedor.setEditable(false);
+                int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar este Proveedor?", "Alerta!", JOptionPane.YES_NO_OPTION);
+                contacto1 = huevosaj.BD_huevos.getConexion();
+                if (resp == 0) {
+                    this.mom.Borrarproveedor(Integer.parseInt(this.vis1.TId_proveeedor.getText()));
+                    JOptionPane.showMessageDialog(null, "Proveedor Eliminado");
+                    DefaultTableModel model = new DefaultTableModel();
+                    model = mom.Lista_prov();
+                    vis1.tabla.setModel(model);
+                    mom.desconectar();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Debe seleccionar una opción", "Error", 0);
+                    JOptionPane.showMessageDialog(null, "Debe aceptar la eliminación");
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una opción", "Error", 0);
+            }
         }
         if (e.getSource() == vis1.BCrear) {
             vis1.PNombre.setVisible(true);
@@ -149,7 +152,9 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
                         } else {
                             JOptionPane.showMessageDialog(null, "Proveedor Registrado", "informacion", 1);
                             contacto1 = huevosaj.BD_huevos.getConexion();
-                            llenartablaproveedores(vis1.tabla);
+                            DefaultTableModel model = new DefaultTableModel();
+                            model = mom.Lista_prov();
+                            vis1.tabla.setModel(model);
                             mom.desconectar();
                         }
                     }
@@ -160,9 +165,11 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
             mom.desconectar();
 
         }
-        if(e.getSource() == vis1.Mostrar){
+        if (e.getSource() == vis1.Mostrar) {
             contacto1 = huevosaj.BD_huevos.getConexion();
-            llenartablaproveedores(vis1.tabla);
+            DefaultTableModel model = new DefaultTableModel();
+            model = mom.Lista_prov();
+            vis1.tabla.setModel(model);
             mom.desconectar();
         }
 
@@ -170,41 +177,41 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-      
+
     }
 }
