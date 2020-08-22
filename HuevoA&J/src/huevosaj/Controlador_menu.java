@@ -61,6 +61,7 @@ public class Controlador_menu implements ActionListener {
             Vista_clientes v1 = new Vista_clientes();
             BD_huevos m = new BD_huevos();
             Controlador_cliente n = new Controlador_cliente(v1, m);
+            
 
             vs.setVisible(false);
         }

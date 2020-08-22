@@ -27,8 +27,8 @@ public class Vista_clientes extends JFrame {
 
     JPanel Panel1, Panel2;
     JLabel Titulo, PNombre, SNombre, PApellido, SApellido, Direccion, Telefono, Correo, Logo;
-    JTextField TPNombre, TSNombre, TPApellido, TSApellido, TDireccion, TTelefono, TCorreo;
-    JButton CerrarB, MinimizarB, BCrear, BEliminar, CrearP, volver, ActualizarB, ListaB;
+    JTextField TPNombre, TSNombre, TPApellido, TSApellido, TDireccion, TTelefono, TCorreo, TId_cliente;
+    JButton CerrarB, MinimizarB, BCrear, BEliminar, CrearP, volver, ActualizarB, ListaB, Mostrar;
     ImageIcon Cerrar, Minimizar, ICrear, IEliminar, VolverI, ActualizarI, ListaI, imagen;
     JSeparator JS1, JS2, JS3, JS4, JS5, JS6, JS7, JS8;
     JTable tablac;
@@ -55,6 +55,23 @@ public class Vista_clientes extends JFrame {
         Panel2.setLayout(null);
         Panel2.setBackground(color1);
         Panel2.setBounds(0, 0, 800, 720);
+
+        TId_cliente = new JTextField("");
+        TId_cliente.setBounds(130, 600, 240, 27);
+        TId_cliente.setFont(fuente2);
+        TId_cliente.setForeground(color2);
+        TId_cliente.setBorder(thickBorder);
+
+        Panel2.add(TId_cliente);
+        TId_cliente.setVisible(false);
+        Mostrar = new JButton("MOSTRAR TODO");
+        Mostrar.setToolTipText("ESTA OPCIÓN LISTA LOS PROVEEDORES");
+        Mostrar.setForeground(color2);
+        Mostrar.setBackground(Color.white);
+        Mostrar.setFont(fuente2);
+
+        Mostrar.setBounds(300, 630, 180, 45);
+        Panel2.add(Mostrar);
 
         Titulo = new JLabel("CLIENTES");
         Titulo.setFont(fuente1);
@@ -278,9 +295,6 @@ public class Vista_clientes extends JFrame {
 //        panel = new JScrollPane(tablac);
 //        tablac = new JTable();
 //        panel.setBounds(60, 170, 660, 500);
-        
-          
-
         tablac = new JTable();
         tablac = new JTable() {
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -296,7 +310,7 @@ public class Vista_clientes extends JFrame {
         panel.setBorder(new LineBorder(color1));
         tablac.setBorder(new LineBorder(color1));
         tablac.setForeground(Color.white);
-          panel.setBounds(60, 170, 660, 500);
+        panel.setBounds(60, 170, 660, 500);
 
         Panel2.add(panel);
         Panel1.add(Logo);
@@ -332,5 +346,5 @@ public class Vista_clientes extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(3);
     }
-    
+
 }
