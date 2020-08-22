@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class BD_huevos {
 
     static Connection contacto = null;
-
+    int Activo =0;
     //CONEXION BASE DE DATOS----------------------------------------------------------------------
     public static Connection getConexion() {
         String url = "jdbc:sqlserver://bdhuevos.mssql.somee.com;databaseName=bdhuevos";
@@ -189,6 +189,73 @@ public class BD_huevos {
         return estado;
     }
 
+    public DefaultTableModel Lista_prov() {
+
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 9) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        };
+        ResultSet result;
+        try {
+
+            PreparedStatement st = contacto.prepareStatement("select * from Proveedor ");
+
+            result = st.executeQuery();
+            ResultSetMetaData rmsd = result.getMetaData();
+            int canCol = rmsd.getColumnCount();
+            canCol += 1;
+            for (int i = 1; i < canCol; i++) {
+                String title[] = {"", "ID", "P Nombre", "S Nombre", "P Apellido","S Apellido","Dirección", "Telefono","Correo"};
+                modelo.addColumn(title[i]);
+            }
+            canCol = canCol - 1;
+            while (result.next()) {
+                Object[] fila = new Object[canCol];
+                for (int i = 0; i < canCol; i++) {
+                    fila[i] = result.getObject(i + 1);
+                }
+//                modelo.addRow(new Object[]{fila[0],new JLabel(this.view_img(3)),fila[2],fila[3]});
+                modelo.addRow(fila);
+            }
+        } catch (SQLException ex) {
+
+        }
+        return modelo;
+    }
+        
+        public String[] ModifiPro(int dato, int combo) {
+        String resultado[] = new String[11], campoDB = "";
+        ResultSet result;
+        try {
+
+            if (Activo == 0) {
+                campoDB = "select * from Proveedor where id_proveedor";
+            }
+            PreparedStatement st
+                    = contacto.prepareStatement(campoDB + "=?");
+            st.setInt(1, dato);
+            result = st.executeQuery();
+            while (result.next()) {
+                resultado[0] = result.getString("primernombre_proveedor");
+                resultado[1] = result.getString("segundonombre_proveedor");
+                resultado[2] = result.getString("primerapellido_proveedor");
+                resultado[3] = result.getString("segundoapellido_proveedor");
+                resultado[4] = result.getString("direccion_proveedor");
+                resultado[5] = result.getString("telefono_proveedor");
+                resultado[6] = result.getString("corrreo_proveedor");
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return resultado;
+    }
     public ArrayList<Proveedores> listarProveedores() {
 
         ArrayList listarProveedores = new ArrayList();
@@ -390,45 +457,5 @@ public class BD_huevos {
 
         return estado;
     }
-       ////Listar Bueno Proveedores
-        public DefaultTableModel Lista_prov() {
-
-        DefaultTableModel modelo = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                if (column == 9) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-        };
-        ResultSet result;
-        try {
-
-            PreparedStatement st = contacto.prepareStatement("select * from Proveedor ");
-
-            result = st.executeQuery();
-            ResultSetMetaData rmsd = result.getMetaData();
-            int canCol = rmsd.getColumnCount();
-            canCol += 1;
-            for (int i = 1; i < canCol; i++) {
-                String title[] = {"", "ID Proveedor", "Primer Nombre", "Segundo Nombre", "Primer Apellido","Segundo Apellido","Dirección", "Telefono","Correo"};
-                modelo.addColumn(title[i]);
-            }
-            canCol = canCol - 1;
-            while (result.next()) {
-                Object[] fila = new Object[canCol];
-                for (int i = 0; i < canCol; i++) {
-                    fila[i] = result.getObject(i + 1);
-                }
-//                modelo.addRow(new Object[]{fila[0],new JLabel(this.view_img(3)),fila[2],fila[3]});
-                modelo.addRow(fila);
-            }
-        } catch (SQLException ex) {
-
-        }
-        return modelo;
-    }
+       
 }

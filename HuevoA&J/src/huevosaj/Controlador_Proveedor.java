@@ -6,6 +6,7 @@
 package huevosaj;
 
 import static huevosaj.Controlador_Registro.contacto1;
+import static java.awt.Frame.ICONIFIED;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -39,6 +41,9 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
         vis1.BEliminar.addActionListener(this);
         vis1.tabla.addMouseListener(this);
         vis1.Mostrar.addActionListener(this);
+        vis1.CerrarB.addActionListener(this);
+        vis1.MinimizarB.addActionListener(this);
+        vis1.volver.addActionListener(this);
     }
 
     public void llenartablaproveedores(JTable tabla) {
@@ -85,6 +90,64 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vis1.ActualizarB) {
 
+            int k = vis1.tabla.getSelectedRow();
+            int c = vis1.tabla.getSelectedRowCount();
+            if (k >= 0 && c == 1) {
+                vis1.PNombre.setVisible(true);
+                vis1.SNombre.setVisible(true);
+                vis1.PApellido.setVisible(true);
+                vis1.SApellido.setVisible(true);
+                vis1.Correo.setVisible(true);
+                vis1.Telefono.setVisible(true);
+                vis1.Direccion.setVisible(true);
+                vis1.TPNombre.setVisible(true);
+                vis1.TSNombre.setVisible(true);
+                vis1.TPApellido.setVisible(true);
+                vis1.TSApellido.setVisible(true);
+                vis1.TCorreo.setVisible(true);
+                vis1.TTelefono.setVisible(true);
+                vis1.TDireccion.setVisible(true);
+                vis1.JS1.setVisible(true);
+                vis1.JS2.setVisible(true);
+                vis1.JS3.setVisible(true);
+                vis1.JS4.setVisible(true);
+                vis1.JS5.setVisible(true);
+                vis1.JS6.setVisible(true);
+                vis1.JS7.setVisible(true);
+                vis1.CrearP.setVisible(false);
+                vis1.ActualizarP.setVisible(true);
+                vis1.Logo.setVisible(false);
+                vis1.TId_proveeedor.setText(String.valueOf(vis1.tabla.getValueAt(k, 0)));
+                vis1.TId_proveeedor.setEditable(false);
+                contacto1 = huevosaj.BD_huevos.getConexion();
+                int combo = 0;
+                int i = Integer.parseInt(vis1.TId_proveeedor.getText());
+                String encontro[] = mom.ModifiPro(Integer.parseInt(vis1.TId_proveeedor.getText()), combo);//trae los datos leidos de la base de datos y los guarad en un arreglo de tipo string
+                vis1.TPNombre.setText(encontro[0]);
+                vis1.TSNombre.setText(encontro[1]);
+                vis1.TPApellido.setText(encontro[2]);//pone lo que hay en la posicion 0 del arreglo en el textfield
+                vis1.TSApellido.setText(encontro[3]);
+                vis1.TDireccion.setText(encontro[4]);
+                vis1.TTelefono.setText(encontro[5]);
+                vis1.TCorreo.setText(encontro[6]);
+
+                DefaultTableModel model = new DefaultTableModel();
+                model = mom.Lista_prov();
+                vis1.tabla.setModel(model);
+                TableColumnModel columnModel = vis1.tabla.getColumnModel();
+
+                columnModel.getColumn(0).setPreferredWidth(20);
+                columnModel.getColumn(1).setPreferredWidth(50);
+                columnModel.getColumn(2).setPreferredWidth(50);
+                columnModel.getColumn(3).setPreferredWidth(50);
+                columnModel.getColumn(4).setPreferredWidth(50);
+                columnModel.getColumn(5).setPreferredWidth(70);
+                columnModel.getColumn(6).setPreferredWidth(60);
+                columnModel.getColumn(7).setPreferredWidth(150);
+                mom.desconectar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una opción", "Error", 0);
+            }
         }
         if (e.getSource() == vis1.BEliminar) {
             int k = vis1.tabla.getSelectedRow();
@@ -100,6 +163,16 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
                     DefaultTableModel model = new DefaultTableModel();
                     model = mom.Lista_prov();
                     vis1.tabla.setModel(model);
+                    TableColumnModel columnModel = vis1.tabla.getColumnModel();
+
+                    columnModel.getColumn(0).setPreferredWidth(20);
+                    columnModel.getColumn(1).setPreferredWidth(50);
+                    columnModel.getColumn(2).setPreferredWidth(50);
+                    columnModel.getColumn(3).setPreferredWidth(50);
+                    columnModel.getColumn(4).setPreferredWidth(50);
+                    columnModel.getColumn(5).setPreferredWidth(70);
+                    columnModel.getColumn(6).setPreferredWidth(60);
+                    columnModel.getColumn(7).setPreferredWidth(150);
                     mom.desconectar();
                 } else {
                     JOptionPane.showMessageDialog(null, "Debe aceptar la eliminación");
@@ -131,6 +204,7 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
             vis1.JS6.setVisible(true);
             vis1.JS7.setVisible(true);
             vis1.CrearP.setVisible(true);
+            vis1.ActualizarP.setVisible(false);
             vis1.Logo.setVisible(false);
         }
         if (e.getSource() == vis1.CrearP) {
@@ -155,6 +229,16 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
                             DefaultTableModel model = new DefaultTableModel();
                             model = mom.Lista_prov();
                             vis1.tabla.setModel(model);
+                            TableColumnModel columnModel = vis1.tabla.getColumnModel();
+
+                            columnModel.getColumn(0).setPreferredWidth(20);
+                            columnModel.getColumn(1).setPreferredWidth(50);
+                            columnModel.getColumn(2).setPreferredWidth(50);
+                            columnModel.getColumn(3).setPreferredWidth(50);
+                            columnModel.getColumn(4).setPreferredWidth(50);
+                            columnModel.getColumn(5).setPreferredWidth(70);
+                            columnModel.getColumn(6).setPreferredWidth(60);
+                            columnModel.getColumn(7).setPreferredWidth(150);
                             mom.desconectar();
                         }
                     }
@@ -170,9 +254,30 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
             DefaultTableModel model = new DefaultTableModel();
             model = mom.Lista_prov();
             vis1.tabla.setModel(model);
+            TableColumnModel columnModel = vis1.tabla.getColumnModel();
+
+            columnModel.getColumn(0).setPreferredWidth(20);
+            columnModel.getColumn(1).setPreferredWidth(50);
+            columnModel.getColumn(2).setPreferredWidth(50);
+            columnModel.getColumn(3).setPreferredWidth(50);
+            columnModel.getColumn(4).setPreferredWidth(50);
+            columnModel.getColumn(5).setPreferredWidth(70);
+            columnModel.getColumn(6).setPreferredWidth(60);
+            columnModel.getColumn(7).setPreferredWidth(150);
             mom.desconectar();
         }
-
+        if (e.getSource() == vis1.CerrarB) {
+            System.exit(0);
+        }
+        if (e.getSource() == vis1.MinimizarB) {
+            vis1.setExtendedState(ICONIFIED);
+        }
+        if (e.getSource() == vis1.volver) {
+            Vista_menu v = new Vista_menu();
+            BD_huevos h = new BD_huevos();
+            Controlador_menu M = new Controlador_menu(v,h);
+            vis1.setVisible(false);
+        }
     }
 
     @Override

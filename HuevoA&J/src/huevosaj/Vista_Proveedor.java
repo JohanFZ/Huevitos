@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 /**
  *
  * @author Space Code A&J
@@ -28,7 +29,7 @@ public class Vista_Proveedor extends JFrame {
     Color color1 = new Color(110, 197, 184);
     Color color2 = new Color(220, 91, 5);
     Border thickBorder = new LineBorder(Color.white, 2);
-    JButton CerrarB, MinimizarB,BCrear,BEliminar, CrearP, volver, ActualizarB, ListaB, Mostrar;
+    JButton CerrarB, MinimizarB,BCrear,BEliminar, CrearP, volver, ActualizarB, ListaB, Mostrar, ActualizarP;
     ImageIcon Cerrar,Minimizar,ICrear,IEliminar,VolverI,ActualizarI,ListaI, imagen,MostrarI;
     JSeparator JS1,JS2,JS3,JS4,JS5,JS6,JS7,JS8;
     JTable tabla;
@@ -70,7 +71,7 @@ public class Vista_Proveedor extends JFrame {
         Mostrar.setBackground(Color.white);
         Mostrar.setFont(fuente2);
         
-        Mostrar.setBounds(300, 650, 180, 45);
+        Mostrar.setBounds(300, 670, 180, 45);
         Panel2.add(Mostrar);
         
         
@@ -217,6 +218,14 @@ public class Vista_Proveedor extends JFrame {
         CrearP.setForeground(color2);
         CrearP.setFont(fuente2);
         
+        ActualizarP = new JButton("Actualizar Proveedor");
+        ActualizarP.setBounds(110, 590, 230, 50);
+        ActualizarP.setBackground(color1);
+        ActualizarP.setForeground(color2);
+        ActualizarP.setFont(fuente2);
+        
+        Panel1.add(ActualizarP);
+        
         volver = new JButton(Minimizar);
         volver.setContentAreaFilled(false);
         volver.setBorderPainted(false);
@@ -284,6 +293,7 @@ public class Vista_Proveedor extends JFrame {
         JS6.setVisible(false);
         JS7.setVisible(false);
         CrearP.setVisible(false);
+        ActualizarP.setVisible(false);
         
         imagen = new ImageIcon("Logo1.png");
         Logo = new JLabel(imagen);
@@ -304,8 +314,9 @@ public class Vista_Proveedor extends JFrame {
         panel.setBorder(new LineBorder(color1));
         tabla.setBorder(new LineBorder(color1));
         tabla.setForeground(Color.white);
-        panel.setBounds(60, 170, 660, 500);
-        
+        panel.setBounds(60, 170, 660, 480);
+                
+    
         Panel2.add(panel);
         Panel1.add(Logo);
         Panel2.add(ListaB);
