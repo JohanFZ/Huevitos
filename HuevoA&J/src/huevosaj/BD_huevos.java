@@ -14,7 +14,8 @@ import javax.swing.table.DefaultTableModel;
 public class BD_huevos {
 
     static Connection contacto = null;
-    int Activo =0;
+    int Activo = 0;
+
     //CONEXION BASE DE DATOS----------------------------------------------------------------------
     public static Connection getConexion() {
         String url = "jdbc:sqlserver://bdhuevos.mssql.somee.com;databaseName=bdhuevos";
@@ -212,7 +213,7 @@ public class BD_huevos {
             int canCol = rmsd.getColumnCount();
             canCol += 1;
             for (int i = 1; i < canCol; i++) {
-                String title[] = {"", "ID", "P Nombre", "S Nombre", "P Apellido","S Apellido","Dirección", "Telefono","Correo"};
+                String title[] = {"", "ID", "P Nombre", "S Nombre", "P Apellido", "S Apellido", "Dirección", "Telefono", "Correo"};
                 modelo.addColumn(title[i]);
             }
             canCol = canCol - 1;
@@ -229,8 +230,8 @@ public class BD_huevos {
         }
         return modelo;
     }
-        
-        public String[] ModifiPro(int dato, int combo) {
+
+    public String[] ModifiPro(int dato, int combo) {
         String resultado[] = new String[11], campoDB = "";
         ResultSet result;
         try {
@@ -256,31 +257,26 @@ public class BD_huevos {
         }
         return resultado;
     }
-    public ArrayList<Proveedores> listarProveedores() {
 
-        ArrayList listarProveedores = new ArrayList();
-        Proveedores vv;
+    public int Act_Pro(int id_proveedor, String primernombre_proveedor, String segundonombre_proveedor, String primerapellido_proveedor, String segundoapellido_proveedor, String direccion_proveedor, String telefono_proveedor, String corrreo_proveedor) {
+        int estado2;
         try {
-
-            PreparedStatement st = contacto.prepareStatement("select * from Proveedor order by primernombre_proveedor asc");
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-
-                vv = new Proveedores();
-                vv.setId_proveedor(rs.getString(1));
-                vv.setPrimernombre_proveedor(rs.getString(2));
-                vv.setSegundonombre_proveedor(rs.getString(3));
-                vv.setPrimerapellido_proveedor(rs.getString(4));
-                vv.setSegundoapellido_proveedor(rs.getString(5));
-                vv.setDireccion_proveedor(rs.getString(6));
-                vv.setTelefono_proveedor(rs.getString(7));
-                vv.setCorreo_proveedor(rs.getString(8));
-                listarProveedores.add(vv);
-            }
-
-        } catch (Exception e) {
+            PreparedStatement st = contacto.prepareStatement("update Proveedor set primernombre_proveedor=?, segundonombre_proveedor=?,primerapellido_proveedor=?,segundoapellido_proveedor=?,direccion_proveedor=?,telefono_proveedor=?, corrreo_proveedor=? where id_proveedor=?");
+            st.setString(1, primernombre_proveedor);
+            st.setString(2, segundonombre_proveedor);
+            st.setString(3, primerapellido_proveedor);
+            st.setString(4, segundoapellido_proveedor);
+            st.setString(5, direccion_proveedor);
+            st.setString(6, telefono_proveedor);
+            st.setString(7, corrreo_proveedor);
+            st.setInt(8, id_proveedor);
+            st.execute();
+            estado2 = 1;
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            estado2 = 0;
         }
-        return listarProveedores;
+        return estado2;
     }
     //VISTA CLIENTES
 
@@ -314,7 +310,7 @@ public class BD_huevos {
 //        }
 //        return listarclientes;
 //    }
-     public DefaultTableModel Lista_clie() {
+    public DefaultTableModel Lista_clie() {
 
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
@@ -337,7 +333,7 @@ public class BD_huevos {
             int canCol = rmsd.getColumnCount();
             canCol += 1;
             for (int i = 1; i < canCol; i++) {
-                String title[] = {"", "ID Cliente", "Primer Nombre", "Segundo Nombre", "Primer Apellido","Segundo Apellido","Dirección", "Telefono","Correo"};
+                String title[] = {"", "ID Cliente", "Primer Nombre", "Segundo Nombre", "Primer Apellido", "Segundo Apellido", "Dirección", "Telefono", "Correo"};
                 modelo.addColumn(title[i]);
             }
             canCol = canCol - 1;
@@ -354,6 +350,7 @@ public class BD_huevos {
         }
         return modelo;
     }
+
     public int Val_clie_Correo(String corr) {
         int estado = 0;
         ResultSet result;
@@ -373,6 +370,7 @@ public class BD_huevos {
         }
         return estado;
     }
+
     public int Agre_clientes(String primernombre_clientes, String segundonombre_clientes, String primerapellido_cliente,
             String segundoapellido_cliente, String direccion_cliente, String telefono_cliente, String correo_cliente) {
         int estado;
@@ -396,7 +394,8 @@ public class BD_huevos {
 
         return estado;
     }
-            public int Borrarproveedor(int id_proveedor) {
+
+    public int Borrarproveedor(int id_proveedor) {
         int estado;
         try {
             PreparedStatement st = contacto.prepareStatement("delete from Proveedor where id_proveedor = ?");
@@ -413,10 +412,9 @@ public class BD_huevos {
 
         return estado;
     }
-            
-              public int Actualizarcliente(int id_cliente, String primernombre_clientes, String segundonombre_clientes, String primerapellido_cliente,
-            String segundoapellido_cliente, String direccion_cliente, String telefono_cliente, String correo_cliente) 
-              {
+
+    public int Actualizarcliente(int id_cliente, String primernombre_clientes, String segundonombre_clientes, String primerapellido_cliente,
+            String segundoapellido_cliente, String direccion_cliente, String telefono_cliente, String correo_cliente) {
         int estado;
 
         try {
@@ -440,7 +438,8 @@ public class BD_huevos {
         return estado;
     }
 /////////BORRAR PROVEEDOR
-        public int Borrarcliente(int id_cliente) {
+
+    public int Borrarcliente(int id_cliente) {
         int estado;
         try {
             PreparedStatement st = contacto.prepareStatement("delete from Cliente where id_cliente = ?");
@@ -457,5 +456,5 @@ public class BD_huevos {
 
         return estado;
     }
-       
+
 }

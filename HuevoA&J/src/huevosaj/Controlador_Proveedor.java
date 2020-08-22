@@ -35,6 +35,7 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
         mom = m;
         vis1 = v1;
 
+        vis1.ActualizarP.addActionListener(this);
         vis1.ActualizarB.addActionListener(this);
         vis1.BCrear.addActionListener(this);
         vis1.CrearP.addActionListener(this);
@@ -44,36 +45,6 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
         vis1.CerrarB.addActionListener(this);
         vis1.MinimizarB.addActionListener(this);
         vis1.volver.addActionListener(this);
-    }
-
-    public void llenartablaproveedores(JTable tabla) {
-        DefaultTableModel model = new DefaultTableModel();
-        tabla.setModel(model);
-        model.addColumn("Id Proveedor");
-        model.addColumn("P Nombre");
-        model.addColumn("S Nombre");
-        model.addColumn("P Apelido");
-        model.addColumn("S Apellido");
-        model.addColumn("Dirección");
-        model.addColumn("Telefono");
-        model.addColumn("Correo");
-        Object[] columna = new Object[8];
-
-        int numeroregis = mom.listarProveedores().size();
-
-        for (int i = 0; i < numeroregis; i++) {
-
-            columna[0] = mom.listarProveedores().get(i).getId_proveedor();
-            columna[1] = mom.listarProveedores().get(i).getPrimernombre_proveedor();
-            columna[2] = mom.listarProveedores().get(i).getSegundonombre_proveedor();
-            columna[3] = mom.listarProveedores().get(i).getPrimerapellido_proveedor();
-            columna[4] = mom.listarProveedores().get(i).getSegundoapellido_proveedor();
-            columna[5] = mom.listarProveedores().get(i).getDireccion_proveedor();
-            columna[6] = mom.listarProveedores().get(i).getTelefono_proveedor();
-            columna[7] = mom.listarProveedores().get(i).getCorreo_proveedor();
-            model.addRow(columna);
-
-        }
     }
 
     public void limpiarPro() {
@@ -88,6 +59,32 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == vis1.ActualizarP) {
+            contacto1 = huevosaj.BD_huevos.getConexion();
+            int i = mom.Act_Pro(Integer.parseInt(vis1.TId_proveeedor.getText()), vis1.TPNombre.getText(), vis1.TSNombre.getText(),
+                    vis1.TPApellido.getText(), vis1.TSApellido.getText(), vis1.TDireccion.getText(), vis1.TTelefono.getText(), vis1.TCorreo.getText());
+            
+            if (i == 1) {
+                JOptionPane.showMessageDialog(null, "Proveedor Actualizado");
+                DefaultTableModel model = new DefaultTableModel();
+                model = mom.Lista_prov();
+                vis1.tabla.setModel(model);
+                TableColumnModel columnModel = vis1.tabla.getColumnModel();
+
+                columnModel.getColumn(0).setPreferredWidth(20);
+                columnModel.getColumn(1).setPreferredWidth(50);
+                columnModel.getColumn(2).setPreferredWidth(50);
+                columnModel.getColumn(3).setPreferredWidth(50);
+                columnModel.getColumn(4).setPreferredWidth(50);
+                columnModel.getColumn(5).setPreferredWidth(70);
+                columnModel.getColumn(6).setPreferredWidth(60);
+                columnModel.getColumn(7).setPreferredWidth(150);
+                mom.desconectar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Proveedor No Actulizado");
+            }
+
+        }
         if (e.getSource() == vis1.ActualizarB) {
 
             int k = vis1.tabla.getSelectedRow();
@@ -275,7 +272,7 @@ public class Controlador_Proveedor implements ActionListener, MouseListener, Key
         if (e.getSource() == vis1.volver) {
             Vista_menu v = new Vista_menu();
             BD_huevos h = new BD_huevos();
-            Controlador_menu M = new Controlador_menu(v,h);
+            Controlador_menu M = new Controlador_menu(v, h);
             vis1.setVisible(false);
         }
     }
